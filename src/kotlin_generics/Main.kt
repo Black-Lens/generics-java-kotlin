@@ -14,6 +14,7 @@ fun main(args: Array<String>) {
     testGenericBox()
     testPublisher()
     testSubscriber()
+    testTypeProjection()
 }
 
 fun testAnyBox() {
@@ -74,6 +75,32 @@ fun testSubscriber() {
     // This is also contravariant.
     val scottishFoldCatSubscriber: Subscriber<ScottishFoldCat> = Subscriber<Cat>()
     scottishFoldCatSubscriber.onEvent(ScottishFoldCat())
+}
+
+fun testTypeProjection() {
+    val mutableList = mutableListOf(1, 2, 3)
+    System.out.println("testTypeProjection: initial mutable list: $mutableList")
+    mutableList.add(4)
+    System.out.println("testTypeProjection: mutable list after add a new member: $mutableList")
+
+    // out-projected
+    val outProjectedList: MutableList<out Int> = mutableList
+    // compile error. outProjectedList is out-projected type. So, can use add()
+//    outProjectedList.add(5)
+    val last1 = outProjectedList.last()
+    System.out.println("testTypeProjection: out-projected list: $outProjectedList")
+    System.out.println("testTypeProjection: out-projected got last element as type: ${last1.javaClass.canonicalName}")
+
+    // in-projected
+    val inProjectedList: MutableList<in Int> = mutableList
+    inProjectedList.add(5)
+    System.out.println("testTypeProjection: in-projected list: $inProjectedList")
+    // Although, you can call last() but you will get Any? not Int.
+    val last2 = inProjectedList.last()
+}
+
+fun testTypeProjectionWithBox() {
+    // TODO
 }
 
 
