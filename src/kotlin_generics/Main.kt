@@ -15,6 +15,7 @@ fun main(args: Array<String>) {
     testPublisher()
     testSubscriber()
     testTypeProjection()
+    testTypeProjectionWithBoxCopy()
 }
 
 fun testAnyBox() {
@@ -85,7 +86,7 @@ fun testTypeProjection() {
 
     // out-projected
     val outProjectedList: MutableList<out Int> = mutableList
-    // compile error. outProjectedList is out-projected type. So, can use add()
+    // compile error. outProjectedList is out-projected type. So, cannot use add()
 //    outProjectedList.add(5)
     val last1 = outProjectedList.last()
     System.out.println("testTypeProjection: out-projected list: $outProjectedList")
@@ -99,8 +100,18 @@ fun testTypeProjection() {
     val last2 = inProjectedList.last()
 }
 
-fun testTypeProjectionWithBox() {
-    // TODO
+fun testTypeProjectionWithBoxCopy() {
+    val catBox = GenericBox<Cat>()
+    catBox.content = Cat()
+    val catBox2 = GenericBox<Cat>()
+    GenericBox.copy(catBox, catBox2)
+    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, catBox2 contains ${catBox2.content}")
+    val animalBox = GenericBox<Animal>()
+    // compile error
+//    GenericBox.copy(catBox, animalBox)
+    // this is ok
+    GenericBox.copy2(catBox, animalBox)
+    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, animalBox contains ${animalBox.content}")
 }
 
 

@@ -7,6 +7,15 @@ package kotlin_generics
 // default upper bound is Any? So, use Any to leverage non-null type.
 class GenericBox<T : Any> {
 
+    companion object {
+        fun <T : Any> copy(source: GenericBox<T>, dest: GenericBox<T>) {
+            dest.content = source.content
+        }
+        fun <T : Any> copy2(source: GenericBox<out T>, dest: GenericBox<in T>) {
+            dest.content = source.content
+        }
+    }
+
     lateinit var content: T
 
     // use-site variance
