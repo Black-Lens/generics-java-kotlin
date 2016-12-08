@@ -18,8 +18,9 @@ class GenericBox<T : Any> {
 
     // use-site variance
     fun copyToBox(box: GenericBox<in T>) {
-        // You cannot read T from consumer.
-//        content = box.content
+        // Although, you can read content from consumer. You only get Any?
+//        val x = box.content
+
         box.content = content
     }
 
