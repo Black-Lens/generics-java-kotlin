@@ -73,6 +73,8 @@ class CatBox<T : Cat> {
 }
 
 fun testCatBox() {
+    val list1 = listOf<String>()
+    val list2 = listOf("a")
 
     val catBox = CatBox<Cat>()
     val catBox2 = CatBox<Cat>()

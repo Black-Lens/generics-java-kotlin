@@ -23,7 +23,7 @@ fun testAnyBox() {
     anyBox.content = "Hello Any Box"
     // anyString is a type of Any not String
     val anyString = anyBox.content
-    System.out.println("testAnyBox: string content: $anyString")
+    println("testAnyBox: string content: $anyString")
 
     // ClassCastException
 //    val anyInt = anyBox.content as Integer
@@ -40,9 +40,9 @@ fun testGenericBox() {
     val genericBox3 = GenericBox<String>()
     genericBox2.copyToBox(genericBox3)
 
-    System.out.println("testGenericBox: box1 content: ${genericBox1.content}")
-    System.out.println("testGenericBox: box2 content: ${genericBox2.content}")
-    System.out.println("testGenericBox: box3 content: ${genericBox3.content}")
+    println("testGenericBox: box1 content: ${genericBox1.content}")
+    println("testGenericBox: box2 content: ${genericBox2.content}")
+    println("testGenericBox: box3 content: ${genericBox3.content}")
 }
 
 /**
@@ -55,7 +55,7 @@ fun testPublisher() {
     // This is covariant since Publisher of Animal can references to Publisher of Cat.
     val publisher: Publisher<Animal> = Publisher(Cat())
     // got Cat instance
-    System.out.println("testPublisher: publisher publishes ${publisher.publish()}")
+    println("testPublisher: publisher publishes ${publisher.publish()}")
 
 }
 
@@ -80,22 +80,22 @@ fun testSubscriber() {
 
 fun testTypeProjection() {
     val mutableList = mutableListOf(1, 2, 3)
-    System.out.println("testTypeProjection: initial mutable list: $mutableList")
+    println("testTypeProjection: initial mutable list: $mutableList")
     mutableList.add(4)
-    System.out.println("testTypeProjection: mutable list after add a new member: $mutableList")
+    println("testTypeProjection: mutable list after add a new member: $mutableList")
 
     // out-projected
     val outProjectedList: MutableList<out Int> = mutableList
     // compile error. outProjectedList is out-projected type. So, cannot use add()
 //    outProjectedList.add(5)
     val last1 = outProjectedList.last()
-    System.out.println("testTypeProjection: out-projected list: $outProjectedList")
-    System.out.println("testTypeProjection: out-projected got last element as type: ${last1.javaClass.canonicalName}")
+    println("testTypeProjection: out-projected list: $outProjectedList")
+    println("testTypeProjection: out-projected got last element as type: ${last1.javaClass.canonicalName}")
 
     // in-projected
     val inProjectedList: MutableList<in Int> = mutableList
     inProjectedList.add(5)
-    System.out.println("testTypeProjection: in-projected list: $inProjectedList")
+    println("testTypeProjection: in-projected list: $inProjectedList")
     // Although, you can call last() but you will get Any? not Int.
     val last2 = inProjectedList.last()
 }
@@ -105,13 +105,13 @@ fun testTypeProjectionWithBoxCopy() {
     catBox.content = Cat()
     val catBox2 = GenericBox<Cat>()
     GenericBox.copy(catBox, catBox2)
-    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, catBox2 contains ${catBox2.content}")
+    println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, catBox2 contains ${catBox2.content}")
     val animalBox = GenericBox<Animal>()
     // compile error
 //    GenericBox.copy(catBox, animalBox)
     // this is ok
     GenericBox.copy2(catBox, animalBox)
-    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, animalBox contains ${animalBox.content}")
+    println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, animalBox contains ${animalBox.content}")
 }
 
 
