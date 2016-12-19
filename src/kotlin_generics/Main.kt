@@ -104,14 +104,14 @@ fun testTypeProjectionWithBoxCopy() {
     val catBox = GenericBox<Cat>()
     catBox.content = Cat()
     val catBox2 = GenericBox<Cat>()
-    GenericBox.copy(catBox, catBox2)
-    println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, catBox2 contains ${catBox2.content}")
+    copyBox(catBox, catBox2)
+    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, catBox2 contains ${catBox2.content}")
     val animalBox = GenericBox<Animal>()
     // compile error
-//    GenericBox.copy(catBox, animalBox)
+//    copyBox(catBox, animalBox)
     // this is ok
-    GenericBox.copy2(catBox, animalBox)
-    println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, animalBox contains ${animalBox.content}")
+    copyBox2(catBox, animalBox)
+    System.out.println("testTypeProjectionWithBoxCopy: catBox contains ${catBox.content}, animalBox contains ${animalBox.content}")
 }
 
 

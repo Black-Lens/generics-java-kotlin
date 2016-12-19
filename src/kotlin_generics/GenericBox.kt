@@ -7,17 +7,9 @@ import java_generics.entity.PersianCat
  * Created by Johnny Dew on 11/28/16.
  */
 
+
 // default upper bound is Any? So, use Any to leverage non-null type.
 class GenericBox<T : Any> {
-
-    companion object {
-        fun <T : Any> copy(source: GenericBox<T>, dest: GenericBox<T>) {
-            dest.content = source.content
-        }
-        fun <T : Any> copy2(source: GenericBox<out T>, dest: GenericBox<in T>) {
-            dest.content = source.content
-        }
-    }
 
     lateinit var content: T
 
@@ -47,6 +39,14 @@ class GenericBox<T : Any> {
 
     }
 
+}
+
+fun <T : Any> copyBox(source: GenericBox<T>, dest: GenericBox<T>) {
+    dest.content = source.content
+}
+
+fun <T : Any> copyBox2(source: GenericBox<out T>, dest: GenericBox<in T>) {
+    dest.content = source.content
 }
 
 class CatBox<T : Cat> {
@@ -111,9 +111,11 @@ fun checkAny(payload: Any) {
 interface Consumer<in T> {
     fun consume(value: T)
 }
+
 interface Producer<out T> {
     fun produce(): T
 }
+
 class BoxConsumer<out T>(val content: T) : Producer<T> {
 
     override fun produce() = content
@@ -143,8 +145,10 @@ fun testBoxConsumer() {
     val list = listOf(1, 2, 3)
 //    val list = listOf("a")
 //    if (list is List<String>) {}
-    if (list is List<*>) {}
+    if (list is List<*>) {
+    }
 
-    if (list is List<Int>) {}
+    if (list is List<Int>) {
+    }
 
 }
