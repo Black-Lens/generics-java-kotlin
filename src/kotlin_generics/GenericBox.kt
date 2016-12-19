@@ -53,7 +53,7 @@ class CatBox<T : Cat> {
 
     lateinit var content: T
 
-    fun otherCatSay(box: CatBox<*>) {
+    fun listenToUnknownTypeCat(box: CatBox<*>) {
         // type of cat is Cat.
         val cat = box.content
         cat.say()
@@ -62,7 +62,7 @@ class CatBox<T : Cat> {
 //        box.content = content
     }
 
-    fun otherSpecificCatSay(box: CatBox<out T>) {
+    fun listenToSameTypeCat(box: CatBox<out T>) {
         // type of specificCat is T
         val specificCat = box.content
         specificCat.say()
@@ -82,16 +82,16 @@ fun testCatBox() {
     val persianCatBox2 = CatBox<PersianCat>()
     // TODO : set content for those boxes.
 
-    catBox.otherCatSay(catBox2)
-    catBox.otherCatSay(persianCatBox)
-    catBox.otherSpecificCatSay(catBox2)
-    catBox.otherSpecificCatSay(persianCatBox)
+    catBox.listenToUnknownTypeCat(catBox2)
+    catBox.listenToUnknownTypeCat(persianCatBox)
+    catBox.listenToSameTypeCat(catBox2)
+    catBox.listenToSameTypeCat(persianCatBox)
 
-    persianCatBox.otherCatSay(catBox)
-    persianCatBox.otherCatSay(persianCatBox2)
-    persianCatBox.otherSpecificCatSay(persianCatBox2)
+    persianCatBox.listenToUnknownTypeCat(catBox)
+    persianCatBox.listenToUnknownTypeCat(persianCatBox2)
+    persianCatBox.listenToSameTypeCat(persianCatBox2)
     // error, expected box of PersianCat
-//    persianCatBox.otherSpecificCatSay(catBox)
+//    persianCatBox.listenToSameTypeCat(catBox)
 
 }
 
